@@ -81,3 +81,7 @@ selected_page = st.sidebar.radio(
     on_change=change_page_url,
 )
 title_to_app[selected_page](rows)
+
+with st.sidebar:
+    if st.checkbox("Ver traducción al español"):
+        st.markdown("""[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/snehankekre/quantum-apps-registration/main)""", unsafe_allow_html=True)

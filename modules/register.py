@@ -140,12 +140,12 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
 
         # Choose the category you want to make you app for
         category_dict = {
-            "Fenómenos cuánticos": 0,
-            "Cuidado del agua y Sostenibilidad Alimentaria": 1,
-            "Visualización y manejo de datos para la conservación del ambiente": 2,
-            "Uso de inteligencia artificial y ciencia de datos en áreas científicas ": 3,
-            "Combate a enfermedades emergentes": 4,
-            "Apps educativas y de apoyo a la enseñanza ": 5,
+            "Quantum Phenomena": 0,
+            "Water care and food sustainability": 1,
+            "Visualization and management of data for the conservation of the environment": 2,
+            "Use of artificial intelligence and data science in Chemistry": 3,
+            "Fight emerging diseases": 4,
+            "Chemistry teaching": 5,
         }
         category = st.radio(
             "Elige tu categoría:",

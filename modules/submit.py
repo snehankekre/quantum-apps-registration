@@ -18,13 +18,13 @@ from .utils import (
 
 
 def submit_page(rows):
-    st.title(":atom_symbol: Hackatón \"Quantum-Apps\" :atom_symbol:")
+    st.title(":atom_symbol: Quantum-Apps Hackathon :atom_symbol:")
 
     if st.session_state["disabled"]:
-        st.info("Vuelva a cargar esta página para permitir el envío")
+        st.info("Please reload this page to enable submission")
     
     team_name = st.text_input(
-        "Nombre del equipo",
+        "Team name",
         value=st.session_state.team,
         key="team_name",
         on_change=update_team_name,
@@ -32,7 +32,7 @@ def submit_page(rows):
     )
 
     pass_2 = st.text_input(
-        "Introducir la contraseña",
+        "Enter password",
         value=st.session_state.pwd,
         type="password",
         key="password",
@@ -44,7 +44,7 @@ def submit_page(rows):
         if len(team_name) > 0:
             # make sure there are no spaces
             if " " in team_name:
-                st.warning("Elimina espacios en el nombre de tu equipo.")
+                st.warning("Please remove spaces in your team name")
                 st.stop()
             # remove dashes and underscores and case sensitivity for comparing
             # makes case insensitive (A-team = a-team)
@@ -57,16 +57,16 @@ def submit_page(rows):
                     row.Team.replace("-", "").replace("_", "").casefold(): row.Password
                 }:
                     st.write(
-                        f"Bienvenido de nuevo **`{team_name}`**. Ahora puede editar su proyecto y enviarlo a la competencia.."
+                        f"Welcome back **`{team_name}`**. You can now edit your project and submit it to the competition."
                     )
-                    if st.checkbox("Mostrar detalles de registro", disabled=st.session_state.disabled):
+                    if st.checkbox("Show registration details", disabled=st.session_state.disabled):
                         st.write(
                             {
-                                "Nombre del equipo": row.Team,
-                                "Contraseña": row.Password,
-                                "Miembros del equipo": row.Participants,
+                                "Team name": row.Team,
+                                "Password": row.Password,
+                                "Team Members": row.Participants,
                                 "Mentor": row.Mentor,
-                                "Categoría": row.Category,
+                                "Category": row.Category,
                                 "GitHub Repo": row.GitHub,
                                 "App URL": row.App,
                             }
@@ -78,7 +78,7 @@ def submit_page(rows):
 
                     # a number input controls the number of text fields
                     team_count = st.number_input(
-                        "Número de personas en el equipo:",
+                        "Number of people on the team:",
                         1,
                         4,
                         value=st.session_state.num_teams,
@@ -86,7 +86,7 @@ def submit_page(rows):
                         on_change=update_team_count,
                         disabled=st.session_state.disabled
                     )
-                    st.write("Ingrese el nombre completo de todos los participantes en su equipo:")
+                    st.write("Enter the full name of all participants on your team:")
 
                     # Get existing members from Google Sheet and add them to session state
                     for x in range(1, int(len(member_list)+1)):
@@ -100,7 +100,7 @@ def submit_page(rows):
                             st.session_state[f"team_member_{x}"] = ""
 
                         member = st.text_input(
-                            f"Nombre de la miembro del equipo {x}",
+                            f"Name of team member {x}",
                             value=st.session_state[f"team_member_{x}"],
                             key=f"team_member_name_{x}",
                             on_change=update_team_member,
@@ -123,7 +123,7 @@ def submit_page(rows):
                     st.session_state.category_index = category_dict[row.Category]
 
                     category = st.radio(
-                        "Elige tu categoría:",
+                        "Choose your category:",
                         category_dict.keys(),
                         index=st.session_state.category_index,
                         key="category",
@@ -138,9 +138,9 @@ def submit_page(rows):
                     # If repo and app exist, ask if they want to update
                     if row.GitHub and row.App:
                         st.write(
-                            "Tu proyecto ya está enviado. ¿Quieres sobreescribirlo?"
+                            "Your project is already submitted. Do you want to overwrite it?"
                         )
-                        if st.checkbox("Sobrescribir", disabled=st.session_state.disabled):
+                        if st.checkbox("Overwrite", disabled=st.session_state.disabled):
                             submit_project(row, idx)
 
                     else:
@@ -151,5 +151,5 @@ def submit_page(rows):
                 idx += 1
 
             if idx == len(rows.fetchall()):
-                st.error("Contraseña o nombre de equipo incorrecto")
+                st.error("Incorrect password or team name")
                 st.stop()

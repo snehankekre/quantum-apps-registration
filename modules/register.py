@@ -22,25 +22,25 @@ app = ""
 
 
 def register_page(rows):
-    st.title(":atom_symbol: Hackatón \"Quantum-Apps\" :atom_symbol:")
+    st.title(":atom_symbol: Quantum-Apps Hackathon :atom_symbol:")
 
     if st.session_state["disabled"]:
-        st.info("Vuelva a cargar esta página para habilitar el registro")
+        st.info("Please reload this page to enable registration")
 
-    st.subheader("Registra tu equipo aquí:")
+    st.subheader("Register your team here:")
     st.write(
-        """El nombre de su equipo no puede tener espacios, si lo desea, puede usar un guión bajo (_) o
-     guión (-) para separar palabras.
+        """Your team name cannot have any spaces, if you wish you can use an underscore (_) or
+    dash (-) to separate words.
 
-Por ejemplo: si el nombre de su equipo es "El equipo A", **El_equipo_A** O **El-equipo-A** son aceptables.
+For example: if your team name is "The A team", **The_A_team** OR **The-A-team** are acceptable.
 
-Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferente para asegurarse de que haya
-    ¡no hay confusión cuando se anuncian los ganadores! """
+If the team name you have chosen is taken already, please choose a different name to make sure there
+    there is no confusion when winners are announced! """
     )
 
-    # elegir un nombre de equipo
+    # choosing a team name
     team_name = st.text_input(
-        "Nombre del equipo",
+        "Team name",
         value=st.session_state.team,
         key="team_name",
         on_change=update_team_name,
@@ -48,35 +48,35 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
     )
 
     if len(team_name) > 0:
-        # asegúrese de que no haya espacios
+        # make sure there are no spaces
         if " " in team_name:
-            st.warning("Elimina espacios en el nombre de tu equipo.")
+            st.warning("Please remove spaces in your team name")
             st.stop()
-        # elimine guiones y guiones bajos y distinga entre mayúsculas y minúsculas para comparar
-        # hace que no se distinga entre mayúsculas y minúsculas (A-team = a-team)
+        # remove dashes and underscores and case sensitivity for comparing
+        # makes case insensitive (A-team = a-team)
         team_short = team_name.replace("-", "").replace("_", "").casefold()
 
         # compare team name to those in database
         for row in rows:
             row_short = row.Team.replace("-", "").replace("_", "").casefold()
-            if row_short == team_short:  # hace que no se distinga entre mayúsculas y minúsculas (A-team = a-team)
-                st.warning("Ese nombre está tomado, elija un nombre de equipo diferente")
+            if row_short == team_short:  # makes case insensitive (A-team = a-team)
+                st.warning("That name is taken, please choose a different team name")
                 st.stop()
 
-        # si el nombre del equipo es válido, continúe creando una contraseña
-        st.info("Nombre del equipo disponible, continúe")
-        st.write(f"Has elegido un nombre de equipo de: **`{team_name}`**")
-        st.button("¿Continuar con este nombre de equipo?", on_click=team_chosen, disabled=st.session_state.disabled)
+        # if team name is valid, continue to making a password
+        st.info("Team name available, please continue")
+        st.write(f"You have chosen a team name of: **`{team_name}`**")
+        st.button("Continue with this team name?", on_click=team_chosen, disabled=st.session_state.disabled)
 
-    # crear contraseña para el equipo
+    # create password for team
     if st.session_state["team_chosen"]:
         # password field
         pass_1 = st.text_input(
-            "Contraseña del equipo", value=st.session_state.pwd, type="password", disabled=st.session_state.disabled
+            "Team Password", value=st.session_state.pwd, type="password", disabled=st.session_state.disabled
         )
-        # Verifique que no sea un error tipográfico.
+        # double check that its not a typo
         pass_2 = st.text_input(
-            "Confirmar contraseña",
+            "Confirm password",
             value=st.session_state.pwd,
             type="password",
             key="password",
@@ -84,25 +84,25 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
         )
 
         if pass_1 and pass_2:
-            # si no coinciden avisar al usuario
+            # if they dont match warn the user
             if pass_1 != pass_2:
-                st.warning("¡Las contraseñas no coinciden!")
+                st.warning("Passwords do not match!")
                 st.stop()
             else:
                 # if they do, save the password
                 update_password()
-                st.write(f"La contraseña de tu equipo es **`{pass_1}`**")
+                st.write(f"Your team password is **`{pass_1}`**")
                 st.write(
-                    "❗ Asegúrese de recordar el nombre y la contraseña de su equipo, se utilizarán para editar y enviar su proyecto"
+                    "❗ Be sure to remember your team name and password, they will be used to edit and submit your project"
                 )
                 st.write("---")
 
     # once a password is saved in state, the team details can be entered
     if st.session_state.pwd:
         # if the team has a mentor they can enter their name here
-        with st.expander("Si su equipo tiene un mentor, ingrese los detalles aquí:"):
+        with st.expander("If your team has a Mentor enter details here:"):
             mentor_name = st.text_input(
-                "Ingrese el nombre del mentor",
+                "Enter mentor name",
                 value=st.session_state.mentor,
                 key="mentor_name",
                 on_change=update_mentor,
@@ -111,7 +111,7 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
 
         # a number input controls the number of text fields
         team_count = st.number_input(
-            "Número de personas en el equipo:",
+            "Number of people on the team:",
             1,
             4,
             value=st.session_state.num_teams,
@@ -119,7 +119,7 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
             on_change=update_team_count,
             disabled=st.session_state.disabled
         )
-        st.write("Ingrese el nombre completo de todos los participantes en su equipo:")
+        st.write("Enter the full name of all participants on your team:")
 
         # create correct number of input fields for members names
         member_list = []
@@ -129,7 +129,7 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
                 st.session_state[f"team_member_{x}"] = ""
 
             member = st.text_input(
-                f"Nombre de la miembro del equipo {x}",
+                f"Name of team member {x}",
                 value=st.session_state[f"team_member_{x}"],
                 key=f"team_member_name_{x}",
                 on_change=update_team_member,
@@ -140,15 +140,15 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
 
         # Choose the category you want to make you app for
         category_dict = {
-            "Fenómenos cuánticos": 0,
-            "Cuidado del agua y Sostenibilidad Alimentaria": 1,
-            "Visualización y manejo de datos para la conservación del ambiente": 2,
-            "Uso de inteligencia artificial y ciencia de datos en áreas científicas ": 3,
-            "Combate a enfermedades emergentes": 4,
-            "Apps educativas y de apoyo a la enseñanza ": 5,
+            "Quantum Phenomena": 0,
+            "Water care and food sustainability": 1,
+            "Visualization and management of data for the conservation of the environment": 2,
+            "Use of artificial intelligence and data science in Chemistry": 3,
+            "Fight emerging diseases": 4,
+            "Chemistry teaching": 5,
         }
         category = st.radio(
-            "Elige tu categoría:",
+            "Choose your category:",
             category_dict.keys(),
             index=st.session_state.category_index,
             key="category",
@@ -163,16 +163,16 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
         # st.session_state.category = category
 
         # review entry and submit to google sheet
-        st.write("Revisa y confirma tu entrada:")
-        st.write(f"**Nombre del equipo: `{st.session_state.team_name}`**")
-        st.write(f"**Miembros del equipo: `{st.session_state.members}`**")
-        st.write(f"**Categoría: `{st.session_state.category}`**")
-        st.write(f"**Contraseña: `{st.session_state.password}`**")
+        st.write("Review and confirm your entry:")
+        st.write(f"**Team name: `{st.session_state.team_name}`**")
+        st.write(f"**Team Member(s): `{st.session_state.members}`**")
+        st.write(f"**Category: `{st.session_state.category}`**")
+        st.write(f"**Password: `{st.session_state.password}`**")
 
         if len(mentor_name) > 1:
             st.write(f"**Mentor: `{st.session_state.mentor}`**")
 
-        submit = st.button("Confirmar entrada del equipo", on_click=team_chosen, disabled=st.session_state.disabled)
+        submit = st.button("Confirm team entry", on_click=team_chosen, disabled=st.session_state.disabled)
 
         if submit:
             # send to google sheet
@@ -193,23 +193,23 @@ Si el nombre del equipo que ha elegido ya está en uso, elija un nombre diferent
                 ]
             )
 
-            st.info("Información del equipo enviada")
+            st.info("Team information submitted")
             st.balloons()
             registration = pd.DataFrame(
                 {
-                    "Nombre del equipo": [st.session_state.team_name],
-                    "Contraseña": [st.session_state.password],
-                    "Miembros del equipo": [st.session_state.members],
+                    "Team name": [st.session_state.team_name],
+                    "Password": [st.session_state.password],
+                    "Members": [st.session_state.members],
                     "Mentor": [st.session_state.mentor_name],
-                    "Categoría": [st.session_state.category],
+                    "Category": [st.session_state.category],
                 }
             )
             download = st.download_button(
-                label="Descargar datos de registro",
+                label="Download registration details",
                 data=registration.to_csv(index=False).encode("utf-8"),
                 file_name=f"{st.session_state.team_name}_registration_details.csv",
                 mime="text/csv",
                 on_click=reset,
             )
 
-            st.info("Vuelva a cargar esta página si desea realizar otro registro")
+            st.info("Please reload this page if you wish to make another registration")

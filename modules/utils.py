@@ -47,19 +47,19 @@ def reset():
 
 def submit_project(row, idx):
     
-    github_url = st.text_input("Ingresa tu GitHub repo URL", disabled=st.session_state.disabled)
-    app_url = st.text_input("Ingresa tu Streamlit Cloud app URL", disabled=st.session_state.disabled)
+    github_url = st.text_input("Enter your GitHub repo URL", disabled=st.session_state.disabled)
+    app_url = st.text_input("Enter your Streamlit Cloud app URL", disabled=st.session_state.disabled)
 
     if github_url and app_url:
         if "github.com" not in github_url:
-            st.warning("Ingrese una URL de repositorio de GitHub válida")
+            st.warning("Please enter a valid GitHub repo URL")
             st.stop()
 
         if "share.streamlit.io" not in app_url:
-            st.warning("Ingrese una URL válida de la aplicación Streamlit Cloud")
+            st.warning("Please enter a valid Streamlit Cloud app URL")
             st.stop()
 
-        submit = st.button("Presentar proyecto")
+        submit = st.button("Submit project")
         if submit:
             gc = gspread.service_account_from_dict(st.secrets["gcp_service_account"])
             sheet_url = st.secrets["private_gsheets_url"]
@@ -70,8 +70,8 @@ def submit_project(row, idx):
             data.update(f"G{idx+2}", app_url)
             data.update(f"H{idx+2}", str(datetime.now(tz=pytz.utc)))
 
-            st.success("Proyecto presentado")
+            st.success("Project submitted")
             st.balloons()
-            st.info("Vuelva a cargar la página para realizar más cambios.")
+            st.info("Reload the page to make further changes")
             disable_widgets()
             st.stop()

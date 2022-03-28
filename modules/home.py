@@ -2,22 +2,22 @@ import streamlit as st
 
 def home_page(rows):
     st.image("images/logoUACH.png", use_column_width=True)
-    st.title(":atom_symbol: Hackatón \"Quantum-Apps\"  :atom_symbol:")
+    st.title(":atom_symbol: Quantum-Apps Hackathon :atom_symbol:")
     st.markdown(
-        """Este hackatón está dirigido a los estudiantes de la Facultad de Ciencias Químicas 
-        de la Universidad Autónoma de Chihuahua y, a estudiantes de áreas afines en otras
-        facultades de la misma universidad, tanto de licenciatura como de posgrado. 
+        """This hackathon is aimed at students of the Faculty of Chemical
+    Sciences of the Autonomous University of Chihuahua, but also at students of
+    related areas in other faculties of the same university.
 
-### :books: Requisitos:
-- Podrán participar estudiantes inscritos o recientemente egresados (no más de seis meses de egreso).
-- Registrarse llenando la solicitud en esta página.
+### :books: Requirements:
+- Enrolled students or recent graduates (no more than six months after graduation) may participate.
+- Register by filling out the fields on this page.
 
-### :1234: Reglas:
-- Se permiten equipos de hasta 4 concursantes.
-- Ser estudiante de licenciatura o posgrado de la UACH o no tener mas de 6 meses de egreso.
-- Una misma persona no puede estar en más de un equipo.
-- Cada equipo necesita un nombre y una contraseña únicos que todos los miembros del equipo conocen y
-     tener acceso a. El nombre del equipo y la contraseña se utilizarán para ingresar, modificar y enviar el proyecto de hackatón.
+### :1234: Rules:
+- Teams of up to 4 contestants are allowed.
+- The same person cannot be in more than one team.
+- Participants can have a mentor (optional), who must be registered.
+- Each Team needs a unique name and password that all the team members know and
+    have access to. The Team name and password will be used to enter, modify and submit the hackathon project.
 """
     )
     

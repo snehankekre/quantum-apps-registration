@@ -3,8 +3,8 @@ import plotly.express as px
 import pandas as pd
 
 def stats_page(rows):
-    st.title(":atom_symbol: Hackatón \"Quantum-Apps\" :atom_symbol:")
-    st.subheader("¡Echa un vistazo a los equipos actuales!")
+    st.title(":atom_symbol: Quantum-Apps Hackathon :atom_symbol:")
+    st.subheader("Take a look at the current teams!")
 
     team_number = 0
     team_members = []
@@ -25,20 +25,20 @@ def stats_page(rows):
         category[row.Category] += 1
         # st.write(row)
 
-    st.write(f"**¡Actualmente hay {team_number} equipos participando!** :tada:")
-    st.write("¡Veamos algunas de las estadísticas de los equipos participantes!")
+    st.write(f"**There are currently {team_number} teams participating!** :tada:")
+    st.write("Lets take a look at some of the statistics of the teams participating!")
 
-    st.subheader("Distribución de Equipos:")
+    st.subheader("Distribution of Teams:")
 
     team_hist_list = list(team_hist.items())
     df_team_hist = pd.DataFrame(
-        team_hist_list, columns=["Número de participantes por equipo", "Contar"]
+        team_hist_list, columns=["Number of Participants per Team", "Count"]
     )
-    fig = px.bar(df_team_hist, x="Número de participantes por equipo", y="Contar")
+    fig = px.bar(df_team_hist, x="Number of Participants per Team", y="Count")
     st.plotly_chart(fig)
 
-    st.subheader("Equipos por Categoría:")
+    st.subheader("Teams per Category:")
     category_list = list(category.items())
-    df_category = pd.DataFrame(category_list, columns=["Categoría", "Número de equipos"])
-    fig = px.bar(df_category, x="Categoría", y="Número de equipos")
+    df_category = pd.DataFrame(category_list, columns=["Category", "Number of Teams"])
+    fig = px.bar(df_category, x="Category", y="Number of Teams")
     st.plotly_chart(fig)

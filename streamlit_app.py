@@ -14,7 +14,7 @@ from modules import (
     stats
 )
 
-st.set_page_config(page_title="Hackatón \"Quantum-Apps\"", page_icon="⚛️")
+st.set_page_config(page_title="Quantum-Apps Hackathon", page_icon="⚛️")
 
 # Create a connection object.
 credentials = service_account.Credentials.from_service_account_info(
@@ -56,10 +56,10 @@ if "disabled" not in st.session_state:
 
 
 title_to_app = {
-    "Casa": home.home_page,
-    "Registrarse": register.register_page,
-    "Presentar": submit.submit_page,
-    "Estadísticas": stats.stats_page,
+    "Home": home.home_page,
+    "Register": register.register_page,
+    "Submit": submit.submit_page,
+    "Statistics": stats.stats_page,
 }
 
 query_params = st.experimental_get_query_params()
@@ -75,7 +75,7 @@ def change_page_url():
 
 titles = list(title_to_app.keys())
 selected_page = st.sidebar.radio(
-    "Paginas:",
+    "Pages:",
     titles,
     key="page_selector",
     on_change=change_page_url,

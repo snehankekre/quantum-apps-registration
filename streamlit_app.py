@@ -85,3 +85,7 @@ title_to_app[selected_page](rows)
 with st.sidebar:
     if st.checkbox("View English translation"):
         st.markdown("""[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/snehankekre/quantum-apps-registration/english)""", unsafe_allow_html=True)
+
+      
+    
+    
